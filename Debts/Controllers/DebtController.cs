@@ -74,7 +74,7 @@ namespace Debts.Controllers
 
             DebtViewModel member = new DebtViewModel
             {
-                Debts = task.Tasks.Where(s => s.Id.Equals(idG)).First().Debts.Where(d => d.Member1 == MemberName || d.Member2 == MemberName)
+                Debts = taskList.Debts.Where(d => d.Member1 == MemberName || d.Member2 == MemberName)
             };
 
     
