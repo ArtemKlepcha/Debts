@@ -26,12 +26,18 @@ namespace Debts.Controllers
         }
         
         [HttpGet]
-        public IActionResult AddTask()
+        public IActionResult AddTask(Guid? id)
         {
             TaskViewModel taskViewModel = new TaskViewModel
             {
-                UserId = UserId
+                UserId = UserId,
+                Members = new Dictionary<string, MemberViewModel>()
             };
+
+            if (id.HasValue)
+            {
+              taskViewModel =  _taskRepo.GetValue(id.Value);
+            }
             return View(taskViewModel);
         }
 

@@ -11,6 +11,7 @@ namespace Debts.Models.Repositories.Abstract
         //IEnumerable<Task> Tasks { get; }
 
         TaskListViewModel GetAll(string userId);
+        TaskViewModel GetValue(Guid taskId);
         void Save(TaskViewModel taskViewModel);
     }
 }
