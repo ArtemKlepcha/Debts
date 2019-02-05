@@ -1,0 +1,18 @@
+﻿@using Debts.ViewModels
+@model TaskViewModel
+
+@using (Html.BeginForm("AddTask", "Tasks", FormMethod.Post, new { @class = "form", role = "form" }))
+{
+
+    @Html.HiddenFor(m => m.TaskId)
+    @Html.HiddenFor(m => m.UserId)
+
+    @Html.LabelFor(m => m.Name, new { @class = "" })
+    @Html.TextBoxFor(m => m.Name)
+
+    @Html.LabelFor(m => m.Sum, new { @class = "" })
+    @Html.TextBoxFor(m => m.Sum)
+
+    <input type="submit" class="frm-btn btn btn-danger" value="Save" />
+
+}
