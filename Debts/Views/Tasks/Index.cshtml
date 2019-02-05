@@ -22,7 +22,7 @@
             <tr>
                 <td>
 
-                    @Html.ActionLink(item.Name, "AddTask", "Tasks", new { id = item.Id })
+                    @Html.ActionLink(item.Name, "AddOrEditTask", "Tasks", new { id = item.Id })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Sum)
@@ -31,5 +31,5 @@
         }
     </tbody>
 </table>
-<a class="btn btn-primary" asp-action="AddTask">Add new</a>
+<a class="btn btn-primary" asp-action="AddOrEditTask">Add new</a>
 
