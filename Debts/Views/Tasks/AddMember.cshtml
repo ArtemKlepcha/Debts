@@ -1,0 +1,13 @@
+﻿@using Debts.ViewModels
+@model MemberViewModel
+
+<div id="AddMemberModal" role="dialog">
+    @Html.LabelFor(m => m.Name)
+    @Html.TextBoxFor(m => m.Name)
+
+    @Html.LabelFor(m => m.Debt)
+    @Html.TextBoxFor(m => m.Debt)
+
+    @Html.LabelFor(m => m.Deposit)
+    @Html.TextBoxFor(m => m.Deposit)
+</div>

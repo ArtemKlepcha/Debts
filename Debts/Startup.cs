@@ -14,7 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Debts.Models.Repositories.Concrete;
 using Debts.Models.Repositories.Abstract;
- 
+
 namespace Debts
 {
     public class Startup

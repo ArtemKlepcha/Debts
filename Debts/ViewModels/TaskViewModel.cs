@@ -15,5 +15,7 @@ namespace Debts.ViewModels
         public string UserId { get; set; }
         public string Name { get; set; }
         public double Sum { get; set; }
+
+        public List<MemberViewModel> Members { get; set; }
     }
 }
