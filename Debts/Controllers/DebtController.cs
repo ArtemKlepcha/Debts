@@ -18,16 +18,20 @@ namespace Debts.Controllers
         {
             _taskRepo = taskRepository;
         }
-        public IActionResult Index(int memb, int? id)
+        public IActionResult Index(int id)
         {
-            //Task taskList = _taskRepo.GetAll(UserId).Tasks.ElementAt(0);
+            Task taskList = _taskRepo.GetAll(UserId).Tasks.ElementAt(0);
 
             Guid idG = Guid.Empty;
 
             //var memId = int.Parse(HttpContext.Request.Query["member"].ToString());
-
-            ViewBag.mID = memb;
+            
             ViewBag.id = id;
+
+            //Member member = taskList.Members.ElementAt(id);
+
+            string MemberName = taskList.Members.ElementAt(id).Name;
+            ViewBag.Name = MemberName;
 
             TaskListViewModel task = new TaskListViewModel
             {
@@ -67,9 +71,10 @@ namespace Debts.Controllers
                     }
                 }
             };
+
             DebtViewModel member = new DebtViewModel
             {
-                Debts = task.Tasks.Where(s => s.Id.Equals(idG)).First().Debts.Where(d => d.Member1 == "mem1" || d.Member2 == "mem1")
+                Debts = task.Tasks.Where(s => s.Id.Equals(idG)).First().Debts.Where(d => d.Member1 == MemberName || d.Member2 == MemberName)
             };
 
     
