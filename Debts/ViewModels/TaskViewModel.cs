@@ -1,6 +1,7 @@
 ﻿using Debts.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Debts.ViewModels
 {
@@ -13,7 +14,11 @@ namespace Debts.ViewModels
     {
         public Guid TaskId { get; set; }
         public string UserId { get; set; }
+
+        [Required(ErrorMessage = "Field \"Name\" can't be empty")]
         public string Name { get; set; }
+
+        [Required(ErrorMessage = "Field \"Sum\" can't be empty")]
         public double Sum { get; set; }
 
         public Dictionary<string, MemberViewModel> Members { get; set; } = new Dictionary<string, MemberViewModel>();
