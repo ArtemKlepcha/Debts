@@ -15,9 +15,9 @@
 
     <div id="divMembers">
         <label>Members</label>
-        @foreach (var key in Model.Members)
+        @foreach (var key in Model.Members.Keys)
         {
-            @Html.Partial("AddMember", key)
+            @Html.Partial("AddMember", new EditTaskMemberViewModel(Model.Members, key))
         }
     </div>
 
@@ -30,7 +30,7 @@
 }
 
 <div id="divNewMemberTemplate" class="hide" hidden="hidden">
-    @Html.Partial("AddMember",new MemberViewModel())
+    @Html.Partial("AddMember", new EditTaskMemberViewModel(null, int.MaxValue.ToString()))
 </div>
 
 <script type="text/javascript">

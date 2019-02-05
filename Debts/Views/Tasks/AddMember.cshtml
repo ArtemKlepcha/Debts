@@ -1,13 +1,15 @@
 ﻿@using Debts.ViewModels
-@model MemberViewModel
+@model EditTaskMemberViewModel
 
 <div id="AddMemberModal" role="dialog">
-    @Html.LabelFor(m => m.Name)
-    @Html.TextBoxFor(m => m.Name)
+    @(Model.Key == int.MaxValue.ToString() ? Html.HiddenFor(m => m.Members[Model.Key].MemberId, new { @Value = Guid.Empty }) : Html.HiddenFor(m => m.Members[Model.Key].MemberId))
 
-    @Html.LabelFor(m => m.Debt)
-    @Html.TextBoxFor(m => m.Debt)
+    @Html.LabelFor(m => m.Members[Model.Key].Name)
+    @Html.TextBoxFor(m => m.Members[Model.Key].Name)
 
-    @Html.LabelFor(m => m.Deposit)
-    @Html.TextBoxFor(m => m.Deposit)
+    @Html.LabelFor(m => m.Members[Model.Key].Debt)
+    @Html.TextBoxFor(m => m.Members[Model.Key].Debt)
+
+    @Html.LabelFor(m => m.Members[Model.Key].Deposit)
+    @Html.TextBoxFor(m => m.Members[Model.Key].Deposit)
 </div>

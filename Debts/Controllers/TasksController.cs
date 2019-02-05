@@ -31,7 +31,7 @@ namespace Debts.Controllers
             TaskViewModel taskViewModel = new TaskViewModel
             {
                 UserId = UserId,
-                Members = new List<MemberViewModel>()
+                Members = new Dictionary<string, MemberViewModel>()
             };
 
             if (id.HasValue)
