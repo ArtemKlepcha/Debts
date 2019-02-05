@@ -2,7 +2,7 @@
 
 namespace Debts.Models
 {
-    public class Task:CommonModel
+    public class Task : CommonModel
     {
         public string Name { get; set; }
         public double Sum { get; set; }
@@ -10,5 +10,6 @@ namespace Debts.Models
         public string UserId { get; set; }
 
         public virtual ICollection<Member> Members { get; set; }
+        public virtual ICollection<Debt> Debts { get; set; }
     }
 }

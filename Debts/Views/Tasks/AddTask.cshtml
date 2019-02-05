@@ -3,7 +3,6 @@
 
 @using (Html.BeginForm("AddTask", "Tasks", FormMethod.Post, new { @class = "form", role = "form" }))
 {
-
     @Html.HiddenFor(m => m.TaskId)
     @Html.HiddenFor(m => m.UserId)
 
@@ -13,6 +12,38 @@
     @Html.LabelFor(m => m.Sum, new { @class = "" })
     @Html.TextBoxFor(m => m.Sum)
 
+
+    <div id="divMembers">
+        <label>Members</label>
+        @foreach (var key in Model.Members.Keys)
+        {
+            @Html.Partial("AddMember", new EditTaskMemberViewModel(Model.Members, key))
+        }
+    </div>
+
+    <button type="button" onclick="AddMemberButton()" class="frm-btn btn btn-danger btn-block">Manage</button>
+
+
+
     <input type="submit" class="frm-btn btn btn-danger" value="Save" />
 
 }
+
+<div id="divNewMemberTemplate" class="hide" hidden="hidden">
+    @Html.Partial("AddMember", new EditTaskMemberViewModel(null, int.MaxValue.ToString()))
+</div>
+
+<script type="text/javascript">
+
+        var slotsCount = @(Model.Members.Count);
+
+        function AddMemberButton() {
+        console.log("toogle");
+        var template = $('#divNewMemberTemplate');
+        console.log(template);
+            var timeSlotIndex = slotsCount;
+            var newTimeSlot = $(template.html().replace(new RegExp('@int.MaxValue', 'g'), timeSlotIndex));
+            $('#divMembers').append(newTimeSlot);
+            slotsCount++;
+        }
+</script>

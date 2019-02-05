@@ -19,6 +19,26 @@ namespace Debts.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Debts.Models.Debt", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Member1");
+
+                    b.Property<string>("Member2");
+
+                    b.Property<double>("Money");
+
+                    b.Property<Guid>("TaskId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("Debts");
+                });
+
             modelBuilder.Entity("Debts.Models.Member", b =>
                 {
                     b.Property<Guid>("Id")
@@ -218,6 +238,14 @@ namespace Debts.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Debts.Models.Debt", b =>
+                {
+                    b.HasOne("Debts.Models.Task", "Task")
+                        .WithMany("Debts")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Debts.Models.Member", b =>

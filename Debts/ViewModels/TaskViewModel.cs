@@ -15,5 +15,19 @@ namespace Debts.ViewModels
         public string UserId { get; set; }
         public string Name { get; set; }
         public double Sum { get; set; }
+
+        public Dictionary<string, MemberViewModel> Members { get; set; } = new Dictionary<string, MemberViewModel>();
+    }
+
+    public class EditTaskMemberViewModel
+    {
+        public string Key { get; set; }
+        public Dictionary<string, MemberViewModel> Members { get; set; }
+
+        public EditTaskMemberViewModel(Dictionary<string, MemberViewModel> members, string index)
+        {
+            Members = members;
+            Key = index;
+        }
     }
 }
