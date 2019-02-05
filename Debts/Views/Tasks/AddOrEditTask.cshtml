@@ -40,12 +40,15 @@
         var slotsCount = @(Model.Members.Count);
 
         function AddMemberButton() {
-        console.log("toogle");
         var template = $('#divNewMemberTemplate');
-        console.log(template);
             var timeSlotIndex = slotsCount;
             var newTimeSlot = $(template.html().replace(new RegExp('@int.MaxValue', 'g'), timeSlotIndex));
             $('#divMembers').append(newTimeSlot);
             slotsCount++;
-        }
+         }
+
+    function removeMember(btn) {
+        console.log("remove");
+        $(btn).closest('[data-member-row]').remove();
+         }
 </script>

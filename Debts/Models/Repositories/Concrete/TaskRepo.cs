@@ -35,6 +35,15 @@ namespace Debts.Models.Repositories.Concrete
                 UserId = taskViewModel.UserId,
                 Members = taskViewModel.Members.Values.Select(e=>e.Map()).ToList()
             };
+
+            var listMembersIdForDel = ctx.Members.Where(t => t.TaskId == task.Id).Except(taskViewModel.Members.Values.Select(e => e.Map())).ToList();
+
+            foreach (var item in listMembersIdForDel)
+            {
+                ctx.Members.Remove(item);
+            }
+
+
             if (task.Id == Guid.Empty)
             {
                 ctx.Tasks.Add(task);

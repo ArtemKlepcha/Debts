@@ -46,17 +46,20 @@ namespace Debts.Controllers
         [HttpPost]
         public IActionResult AddOrEditTask(TaskViewModel taskViewModel)
         {
-            if (ModelState.IsValid)
-            {
-                _taskRepo.Save(taskViewModel);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return View(taskViewModel);
-            }
+            //if (ModelState.IsValid)
+            //{
+            //    _taskRepo.Save(taskViewModel);
+            //    return RedirectToAction("Index");
+            //}
+            //else
+            //{
+            //    return View(taskViewModel);
+            //}
 
-            
+            _taskRepo.Save(taskViewModel);
+            return RedirectToAction("Index");
+
+
         }
 
         [HttpGet]

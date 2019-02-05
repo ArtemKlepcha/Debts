@@ -10,6 +10,7 @@ namespace Debts.ViewModels
     public class MemberViewModel
     {
         public const double maxValue = Double.MaxValue;
+
         public Guid MemberId { get; set; }
 
         [Required(ErrorMessage = "Field \"Name\" can't be empty")]

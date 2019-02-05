@@ -20,7 +20,6 @@ namespace Debts.ViewModels
         [Required(ErrorMessage = "Field \"Name\" can't be empty")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Field \"Sum\" can't be empty")]
         [Range(0, maxValue, ErrorMessage = "Min value is 0.")]
         public double Sum { get; set; }
 

@@ -1,8 +1,11 @@
 ﻿@using Debts.ViewModels
 @model EditTaskMemberViewModel
 
-<div id="AddMemberModal" role="dialog">
-    @(Model.Key == int.MaxValue.ToString() ? Html.HiddenFor(m => m.Members[Model.Key].MemberId, new { @Value = Guid.Empty }) : Html.HiddenFor(m => m.Members[Model.Key].MemberId))
+<div id="AddMemberModal" role="dialog" data-member-row>
+    <div>
+        <button class="btn btn-danger frm-btn" role="button" type="button" onclick="removeMember(this)">Remove This Member</button>
+    </div>
+    @(Model.Key == int.MaxValue.ToString() ? Html.HiddenFor(m => m.Members[Model.Key].MemberId, new { value=Guid.Empty }) : Html.HiddenFor(m => m.Members[Model.Key].MemberId))
 
     @Html.LabelFor(m => m.Members[Model.Key].Name)
     @Html.TextBoxFor(m => m.Members[Model.Key].Name)
@@ -15,4 +18,6 @@
     @Html.LabelFor(m => m.Members[Model.Key].Deposit)
     @Html.TextBoxFor(m => m.Members[Model.Key].Deposit)
     @Html.ValidationMessageFor(m => m.Members[Model.Key].Deposit)
+
+
 </div>
