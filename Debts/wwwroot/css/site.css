@@ -37,5 +37,16 @@ body {
 }
 
 .btn-default {
+    cursor: pointer;
+    color: #000;
+    background-color: #d3d3d3;
+    border-color: #d5d5d5;
+}
 
+body {
+    padding-top: 5rem;
+}
+.starter-template {
+    padding: 3rem 1.5rem;
+    text-align: center;
 }
