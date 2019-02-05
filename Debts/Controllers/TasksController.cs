@@ -6,6 +6,7 @@ using Debts.Models.Repositories.Abstract;
 using Debts.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Debts.Controllers
 {
@@ -18,6 +19,7 @@ namespace Debts.Controllers
             _taskRepo = taskRepository;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             TaskListViewModel taskList = _taskRepo.GetAll(UserId);
@@ -26,7 +28,7 @@ namespace Debts.Controllers
         }
         
         [HttpGet]
-        public IActionResult AddTask(Guid? id)
+        public IActionResult AddOrEditTask(Guid? id)
         {
             TaskViewModel taskViewModel = new TaskViewModel
             {
@@ -42,11 +44,26 @@ namespace Debts.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddTask(TaskViewModel taskViewModel)
+        public IActionResult AddOrEditTask(TaskViewModel taskViewModel)
         {
-            _taskRepo.Save(taskViewModel);
+            if (ModelState.IsValid)
+            {
+                _taskRepo.Save(taskViewModel);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(taskViewModel);
+            }
 
-            return RedirectToAction("Index");
+            
+        }
+
+        [HttpGet]
+        public JsonResult CheckValue(double value)
+        {
+            var result = !(value > 0);
+            return Json(result);
         }
 
     }
