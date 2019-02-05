@@ -12,5 +12,6 @@ namespace Debts.Data
         }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Member> Members { get; set; }
+        public DbSet<Debt> Debts { get; set; }
     }
 }
