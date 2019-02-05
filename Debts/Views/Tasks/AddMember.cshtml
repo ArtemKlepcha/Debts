@@ -6,10 +6,13 @@
 
     @Html.LabelFor(m => m.Members[Model.Key].Name)
     @Html.TextBoxFor(m => m.Members[Model.Key].Name)
+    @Html.ValidationMessageFor(m => m.Members[Model.Key].Name)
 
     @Html.LabelFor(m => m.Members[Model.Key].Debt)
     @Html.TextBoxFor(m => m.Members[Model.Key].Debt)
+    @Html.ValidationMessageFor(m => m.Members[Model.Key].Debt)
 
     @Html.LabelFor(m => m.Members[Model.Key].Deposit)
     @Html.TextBoxFor(m => m.Members[Model.Key].Deposit)
+    @Html.ValidationMessageFor(m => m.Members[Model.Key].Deposit)
 </div>

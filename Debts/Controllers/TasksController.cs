@@ -28,7 +28,7 @@ namespace Debts.Controllers
         }
         
         [HttpGet]
-        public IActionResult AddTask(Guid? id)
+        public IActionResult AddOrEditTask(Guid? id)
         {
             TaskViewModel taskViewModel = new TaskViewModel
             {
@@ -44,7 +44,7 @@ namespace Debts.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddTask(TaskViewModel taskViewModel)
+        public IActionResult AddOrEditTask(TaskViewModel taskViewModel)
         {
             if (ModelState.IsValid)
             {
