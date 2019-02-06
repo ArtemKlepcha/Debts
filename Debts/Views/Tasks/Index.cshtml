@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Index";
 }
+@{int i = 1; }
 
 <table class="table table-striped table-bordered table-hover">
     <thead>
@@ -22,12 +23,13 @@
             <tr>
                 <td>
 
-                    @Html.ActionLink(item.Name, "AddOrEditTask", "Tasks", new { id = item.Id })
+                    @Html.ActionLink(item.Name, "AddOrEditTask", "Tasks", new { id = i })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Sum)
                 </td>
             </tr>
+            i++;
         }
     </tbody>
 </table>

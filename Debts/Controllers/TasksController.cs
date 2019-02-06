@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Debts.Controllers
 {
+    [Authorize]
     public class TasksController : BaseController
     {
         private readonly ITaskRepo _taskRepo;
@@ -19,7 +20,6 @@ namespace Debts.Controllers
             _taskRepo = taskRepository;
         }
 
-        [Authorize]
         public IActionResult Index()
         {
             TaskListViewModel taskList = _taskRepo.GetAll(UserId);
@@ -28,7 +28,7 @@ namespace Debts.Controllers
         }
         
         [HttpGet]
-        public IActionResult AddOrEditTask(Guid? id)
+        public IActionResult AddOrEditTask(int? id)
         {
             TaskViewModel taskViewModel = new TaskViewModel
             {
@@ -36,10 +36,11 @@ namespace Debts.Controllers
                 Members = new Dictionary<string, MemberViewModel>()
             };
 
-            if (id.HasValue)
+            if (id != null)
             {
-              taskViewModel =  _taskRepo.GetValue(id.Value);
+              taskViewModel =  _taskRepo.GetValue(id - 1, UserId);
             }
+
             return View(taskViewModel);
         }
 

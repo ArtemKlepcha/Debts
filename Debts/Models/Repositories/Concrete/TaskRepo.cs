@@ -56,9 +56,9 @@ namespace Debts.Models.Repositories.Concrete
             ctx.SaveChanges();
         }
 
-        public TaskViewModel GetValue(Guid taskId)
+        public TaskViewModel GetValue(int? taskId, string UserId)
         {
-            var task = Tasks.FirstOrDefault(t => t.Id == taskId);
+            var task = GetAll(UserId).Tasks.ElementAt(taskId ?? 0);
             TaskViewModel taskViewModel = new TaskViewModel
             {
                 Name = task.Name,
