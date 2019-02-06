@@ -50,3 +50,20 @@ body {
     padding: 3rem 1.5rem;
     text-align: center;
 }
+
+.navbar {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05) !important;
+    background: #fff!important;
+    padding: 10px 15%;
+}
+
+.text-black {
+    color: #000;
+}
+.form-group {
+    width: 500px;
+}
+
+.form-inline > label {
+    margin-right: 5px;
+}

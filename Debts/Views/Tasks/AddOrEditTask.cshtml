@@ -1,41 +1,54 @@
 ﻿@using Debts.ViewModels
 @model TaskViewModel
 
-@using (Html.BeginForm("AddOrEditTask", "Tasks", FormMethod.Post, new { @class = "form", role = "form"}))
+@using (Html.BeginForm("AddOrEditTask", "Tasks", FormMethod.Post, new { @class = "form", role = "form" }))
 {
-    @Html.HiddenFor(m => m.TaskId)
-    @Html.HiddenFor(m => m.UserId)
-
-    @Html.LabelFor(m => m.Name, new { @class = "" })
-    @Html.TextBoxFor(m => m.Name)
-    @Html.ValidationMessageFor(m => m.Name)
-
-    @Html.LabelFor(m => m.Sum, new { @class = "" })
-    @Html.TextBoxFor(m => m.Sum, new { onkeyup="changeSum()"})
-    @Html.ValidationMessageFor(m => m.Sum)
-
-
-    <div id="divMembers">
-        <label>Members</label>
-        @foreach (var key in Model.Members.Keys)
-        {
-            @Html.Partial("AddMember", new EditTaskMemberViewModel(Model.Members, key))
-        }
+<h4>
+    @if (string.IsNullOrEmpty(Model.Name))
+    {
+        @:Add task
+    }
+    else
+    {
+        @:Edit @Model.Name
+    }
+</h4>
+    <div class="form-inline">
+            @Html.HiddenFor(m => m.TaskId)
+            @Html.HiddenFor(m => m.UserId)
+        <div class="form-inline m-2">
+            @Html.LabelFor(m => m.Name, new { @class = "" })
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+        <div class="form-inline m-2">
+            @Html.LabelFor(m => m.Sum, new { @class = "" })
+            @Html.TextBoxFor(m => m.Sum, new { onkeyup = "changeSum()", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Sum)
+        </div>
     </div>
 
-    <button type="button" onclick="AddMemberButton()" class="btn btn-danger">Add Member</button>
+        <div id="divMembers">
+            <h4>Members</h4>
+            @foreach (var key in Model.Members.Keys)
+            {
+                @Html.Partial("AddMember", new EditTaskMemberViewModel(Model.Members, key))
+            }
+        </div>
+
+        <button type="button" onclick="AddMemberButton()" class="btn btn-primary">Add Member</button>
 
 
 
-    <input type="submit" class="frm-btn btn btn-danger" value="Save" />
+        <input type="submit" class="btn btn-success" value="Save" />
 
-}
+        }
 
-<div id="divNewMemberTemplate" class="hide" hidden="hidden">
-    @Html.Partial("AddMember", new EditTaskMemberViewModel(null, int.MaxValue.ToString()))
-</div>
+        <div id="divNewMemberTemplate" class="hide" hidden="hidden">
+            @Html.Partial("AddMember", new EditTaskMemberViewModel(null, int.MaxValue.ToString()))
+        </div>
 
-<script type="text/javascript">
+        <script type="text/javascript">
 
     var slotsCount = @(Model.Members.Count);
 
@@ -118,4 +131,4 @@
         //console.log(debtsInputs);
     }
 
-</script>
+        </script>
