@@ -4,12 +4,14 @@ using System.Linq;
 using Debts.Models;
 using Debts.Models.Repositories.Abstract;
 using Debts.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Debts.Controllers
 {
+    [Authorize]
     public class DebtController : BaseController
     {
         private readonly ITaskRepo _taskRepo;
@@ -18,20 +20,16 @@ namespace Debts.Controllers
         {
             _taskRepo = taskRepository;
         }
-        public IActionResult Index(int id)
+        public IActionResult Index(ushort taskID, ushort memberID)
         {
-            Task taskList = _taskRepo.GetAll(UserId).Tasks.ElementAt(0);
+            Task taskList = _taskRepo.GetAll(UserId).Tasks.ElementAt(taskID);
 
-            Guid idG = Guid.Empty;
-
-            //var memId = int.Parse(HttpContext.Request.Query["member"].ToString());
-            
-            ViewBag.id = id;
+            ViewBag.id = memberID;
 
             //Member member = taskList.Members.ElementAt(id);
 
-            string MemberName = taskList.Members.ElementAt(id).Name;
-            ViewBag.Name = MemberName;
+            string MemberName = taskList.Members.ElementAt(memberID).Name;
+            //ViewBag.Name = MemberName;
 
             TaskListViewModel task = new TaskListViewModel
             {
@@ -74,7 +72,8 @@ namespace Debts.Controllers
 
             DebtViewModel member = new DebtViewModel
             {
-                Debts = taskList.Debts.Where(d => d.Member1 == MemberName || d.Member2 == MemberName)
+                Debts = taskList.Debts.Where(d => d.Member1 == MemberName || d.Member2 == MemberName),
+                Name = MemberName
             };
 
     

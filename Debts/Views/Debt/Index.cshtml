@@ -1,17 +1,7 @@
 ﻿@using Debts.ViewModels
 @model DebtViewModel
 
-@foreach (var item in Model.Debts)
-{
-            <div>
-                <h4>Member1: @item.Member1</h4>
-                <h4>Member2: @item.Member2</h4>
-                <h4>Money: @item.Money</h4>
-            </div>
-            <br />
-}
-
-<h1>@ViewBag.Name</h1>
+<h1>@Model.Name</h1>
 
 <table class="table table-striped table-bordered table-hover">
     <thead>
@@ -28,15 +18,30 @@
         @foreach (var item in Model.Debts)
         {
                 <tr>
-                    <td>
-                        
-                    </td>
+                    @if (Model.Name.Equals(item.Member1))
+                    {
                     <td>
                         @Html.DisplayFor(modelItem => item.Member2)
                     </td>
+
                     <td>
-                        @Html.DisplayFor(modelItem => item.Money)
+                        
+                        -@Html.DisplayFor(modelItem => item.Money)
+                        
                     </td>
+                    }
+                    else
+                    {
+                        <td>
+                        @Html.DisplayFor(modelItem => item.Member1)
+                    </td>
+
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.Money)
+                        
+                    </td>
+                    }
                 </tr>
         }
         </tbody>

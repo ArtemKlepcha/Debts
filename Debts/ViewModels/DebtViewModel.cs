@@ -8,6 +8,7 @@ namespace Debts.ViewModels
 {
     public class DebtViewModel
     {
+        public string Name { get; set; }
         public IEnumerable<Debt> Debts { get; set; }
     }
 }
