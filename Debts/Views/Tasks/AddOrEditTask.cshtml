@@ -1,7 +1,7 @@
 ﻿@using Debts.ViewModels
 @model TaskViewModel
 
-@using (Html.BeginForm("AddOrEditTask", "Tasks", FormMethod.Post, new { @class = "form", role = "form" }))
+@using (Html.BeginForm("AddOrEditTask", "Tasks", FormMethod.Post, new { @class = "form", role = "form"}))
 {
     @Html.HiddenFor(m => m.TaskId)
     @Html.HiddenFor(m => m.UserId)
@@ -11,7 +11,7 @@
     @Html.ValidationMessageFor(m => m.Name)
 
     @Html.LabelFor(m => m.Sum, new { @class = "" })
-    @Html.TextBoxFor(m => m.Sum)
+    @Html.TextBoxFor(m => m.Sum, new { onchange="changeSum()"})
     @Html.ValidationMessageFor(m => m.Sum)
 
 
@@ -37,18 +37,48 @@
 
 <script type="text/javascript">
 
-        var slotsCount = @(Model.Members.Count);
+    var slotsCount = @(Model.Members.Count);
 
-        function AddMemberButton() {
+    function AddMemberButton() {
         var template = $('#divNewMemberTemplate');
-            var timeSlotIndex = slotsCount;
-            var newTimeSlot = $(template.html().replace(new RegExp('@int.MaxValue', 'g'), timeSlotIndex));
-            $('#divMembers').append(newTimeSlot);
-            slotsCount++;
-         }
+        var timeSlotIndex = slotsCount;
+        var newTimeSlot = $(template.html().replace(new RegExp('@int.MaxValue', 'g'), timeSlotIndex));
+        $('#divMembers').append(newTimeSlot);
+        slotsCount++;
+    }
 
     function removeMember(btn) {
         console.log("remove");
         $(btn).closest('[data-member-row]').remove();
-         }
+    }
+
+    function changeSum() {
+        var sumInput = document.getElementById("Sum").value;
+        console.log(sumInput);
+
+        var depositInputs = document.getElementsByClassName("deposit");
+        for (var iterator = 0; iterator < depositInputs.length - 1; iterator++) {
+            depositInputs[iterator].value = (sumInput / (depositInputs.length - 1)).toFixed(2);
+        }
+
+    }
+
+    function changeDebt() {
+        console.log("change debt trigger");
+        var debtsInputs = document.getElementsByClassName("debt");
+        for (var iterator = 0; iterator < debtsInputs.length-1; iterator++) {
+            console.log(debtsInputs[iterator].value);
+        }
+        //console.log(debtsInputs);
+    }
+
+    function changeDeposit() {
+        console.log("change deposit trigger");
+        var depositInputs = document.getElementsByClassName("deposit");
+        for (var iterator = 0; iterator < depositInputs.length-1; iterator++) {
+            console.log(depositInputs[iterator].value);
+        }
+        //console.log(debtsInputs);
+    }
+
 </script>

@@ -5,19 +5,32 @@
     <div>
         <button class="btn btn-danger frm-btn" role="button" type="button" onclick="removeMember(this)">Remove This Member</button>
     </div>
-    @(Model.Key == int.MaxValue.ToString() ? Html.HiddenFor(m => m.Members[Model.Key].MemberId, new { value=Guid.Empty }) : Html.HiddenFor(m => m.Members[Model.Key].MemberId))
+    @*@if (Model.Members!=null && Model.Key == int.MaxValue.ToString())
+    {
+        <input data-val="true" data-val-required="The MemberId field is required." id="@Model.Members[Model.Key].MemberId" name="@Model.Members[Model.Key].MemberId" type="hidden" value="@Guid.Empty">
+    }
+    else
+    {
+        <input data-val="true" data-val-required="The MemberId field is required." id="@Model.Members[Model.Key].MemberId" name="@Model.Members[Model.Key].MemberId" type="hidden" value="@Model.Members[Model.Key].MemberId">
+    }*@
+
+
+
+    @(Model.Key == int.MaxValue.ToString() ? Html.HiddenFor(m => m.Members[Model.Key].MemberId, new { value = Guid.Empty }) : Html.HiddenFor(m => m.Members[Model.Key].MemberId))
 
     @Html.LabelFor(m => m.Members[Model.Key].Name)
     @Html.TextBoxFor(m => m.Members[Model.Key].Name)
     @Html.ValidationMessageFor(m => m.Members[Model.Key].Name)
 
     @Html.LabelFor(m => m.Members[Model.Key].Debt)
-    @Html.TextBoxFor(m => m.Members[Model.Key].Debt)
+    @Html.TextBoxFor(m => m.Members[Model.Key].Debt, "", new { onchange = "changeDebt()", @class="debt" })
     @Html.ValidationMessageFor(m => m.Members[Model.Key].Debt)
 
     @Html.LabelFor(m => m.Members[Model.Key].Deposit)
-    @Html.TextBoxFor(m => m.Members[Model.Key].Deposit)
+    @Html.TextBoxFor(m => m.Members[Model.Key].Deposit, "", new { onchange = "changeDeposit()", @class="deposit" })
     @Html.ValidationMessageFor(m => m.Members[Model.Key].Deposit)
+
+
 
 
 </div>
