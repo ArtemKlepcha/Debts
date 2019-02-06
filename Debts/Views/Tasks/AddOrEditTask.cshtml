@@ -56,10 +56,34 @@
     }
 
     function changeSum() {
-        var sumInput = document.getElementById("Sum").value;
 
+        //value in sum field
+        var sumInputElem = document.getElementById("Sum");
+        var sumInput = sumInputElem.value;
+
+        //change first field "deposit"
         var depositInputs = document.getElementsByClassName("deposit");
         depositInputs[0].value = sumInput;
+        changeDeposit();
+
+        //get all inputs with manual edit value
+        var debtsEditInputs = document.getElementsByClassName("debtediting");
+
+        if (debtsEditInputs.length != 0) {
+            var debtsEditSum = 0;
+            //caclulate sum without this fields
+            for (var i = 0; i < debtsEditInputs.length; i++) {
+                debtsEditSum += parseFloat(debtsEditInputs[i].value);
+            }
+            sumInput -= debtsEditSum;
+            if (sumInput < 0) {
+                sumInputElem.style.color = "red";
+                return;
+            } else {
+                sumInputElem.style.color = "black";
+            }
+        }
+        
 
         //get all inputs with "debts"
         var debtsInputs = document.getElementsByClassName("debt");
@@ -103,18 +127,16 @@
         }
     }
 
-    function changeDebt() {
-        console.log("change debt trigger");
-        var debtsInputs = document.getElementsByClassName("debt");
-        for (var iterator = 0; iterator < debtsInputs.length-1; iterator++) {
-            console.log(debtsInputs[iterator].value);
-        }
-        //console.log(debtsInputs);
+    function changeDebt(editedInput) {
+        editedInput.className += "editing";
+        //var debtsInputs = document.getElementsByClassName("debt");
+        //for (var iterator = 0; iterator < debtsInputs.length-1; iterator++) {
+        //}
     }
 
     function changeDeposit() {
         var sumInput = document.getElementById("Sum");
-
+        console.log(sumInput.value);
         var depositInputs = document.getElementsByClassName("deposit");
         var depositsLength = depositInputs.length - 1;
 
@@ -122,6 +144,7 @@
         for (var iterator = 0; iterator < depositsLength; iterator++) {
             sumDeposits += parseFloat(depositInputs[iterator].value);
         }
+        console.log(sumDeposits);
 
         if (sumDeposits < sumInput.value) {
             sumInput.style.color = "red";

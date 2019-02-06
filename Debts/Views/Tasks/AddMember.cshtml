@@ -23,7 +23,7 @@
     @Html.ValidationMessageFor(m => m.Members[Model.Key].Name)
 
     @Html.LabelFor(m => m.Members[Model.Key].Debt)
-    @Html.TextBoxFor(m => m.Members[Model.Key].Debt, "", new { onkeyup = "changeDebt()", @class="debt" })
+    @Html.TextBoxFor(m => m.Members[Model.Key].Debt, "", new { onchange = "changeDebt(this)", @class="debt" })
     @Html.ValidationMessageFor(m => m.Members[Model.Key].Debt)
 
     @Html.LabelFor(m => m.Members[Model.Key].Deposit)
