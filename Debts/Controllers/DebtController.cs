@@ -22,13 +22,13 @@ namespace Debts.Controllers
         }
         public IActionResult Index(ushort taskID, ushort memberID)
         {
-            Task taskList = _taskRepo.GetAll(UserId).Tasks.ElementAt(taskID);
+            Task taskList = _taskRepo.GetAll(UserId).Tasks.ElementAt(taskID - 1);
 
             ViewBag.id = memberID;
 
             //Member member = taskList.Members.ElementAt(id);
 
-            string MemberName = taskList.Members.ElementAt(memberID).Name;
+            string MemberName = taskList.Members.ElementAt(memberID - 1).Name;
             //ViewBag.Name = MemberName;
 
             TaskListViewModel task = new TaskListViewModel
