@@ -56,11 +56,46 @@
         var sumInput = document.getElementById("Sum").value;
         console.log(sumInput);
 
-        var depositInputs = document.getElementsByClassName("deposit");
-        for (var iterator = 0; iterator < depositInputs.length - 1; iterator++) {
-            depositInputs[iterator].value = (sumInput / (depositInputs.length - 1)).toFixed(2);
+        //get all inputs with "debts"
+        var debtsInputs = document.getElementsByClassName("debt");
+        var debtsLength = debtsInputs.length - 1;
+
+        //calculate basic value
+        var basicValueWithError = parseFloat((sumInput / debtsLength).toFixed(2));
+
+        //calculate sum value with error
+        var sumWithError = basicValueWithError * debtsLength;
+
+        //get error
+        var error = parseFloat((sumInput - sumWithError).toFixed(2));
+
+        //global iterator for set correct debt value
+        var iterator = 0;
+        if (error != 0) {
+            //check sing in error
+            var sign = (error >= 0) ? true : false;
+            while (error != 0) {
+                //check sign and inc or dec value for correct value
+                switch (sign) {
+                    case false:
+                        error += 0.01;
+                        debtsInputs[iterator].value = parseFloat(basicValueWithError - 0.01).toFixed(2);
+                        break;
+
+                    case true:
+                        error -= 0.01;
+                        debtsInputs[iterator].value = parseFloat(basicValueWithError + 0.01).toFixed(2);
+                        break;
+                }
+                iterator++;
+            }
         }
 
+        //set value for other inputs, if needed
+        while (iterator <= debtsLength) {
+            debtsInputs[iterator].value = basicValueWithError;
+            iterator++;
+        }
     }
 
     function changeDebt() {
