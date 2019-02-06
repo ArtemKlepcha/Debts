@@ -46,6 +46,7 @@
         $('#divMembers').append(newTimeSlot);
         slotsCount++;
         changeSum();
+
     }
 
     function removeMember(btn) {
@@ -56,7 +57,9 @@
 
     function changeSum() {
         var sumInput = document.getElementById("Sum").value;
-        console.log(sumInput);
+
+        var depositInputs = document.getElementsByClassName("deposit");
+        depositInputs[0].value = sumInput;
 
         //get all inputs with "debts"
         var debtsInputs = document.getElementsByClassName("debt");
@@ -110,12 +113,22 @@
     }
 
     function changeDeposit() {
-        console.log("change deposit trigger");
+        var sumInput = document.getElementById("Sum");
+
         var depositInputs = document.getElementsByClassName("deposit");
-        for (var iterator = 0; iterator < depositInputs.length-1; iterator++) {
-            console.log(depositInputs[iterator].value);
+        var depositsLength = depositInputs.length - 1;
+
+        var sumDeposits = 0;
+        for (var iterator = 0; iterator < depositsLength; iterator++) {
+            sumDeposits += parseFloat(depositInputs[iterator].value);
         }
-        //console.log(debtsInputs);
+
+        if (sumDeposits < sumInput.value) {
+            sumInput.style.color = "red";
+        } else {
+            sumInput.style.color = "black";
+        }
+
     }
 
 </script>
