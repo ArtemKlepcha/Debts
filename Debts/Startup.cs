@@ -73,6 +73,7 @@ namespace Debts
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseBrowserLink();
 
             app.UseMvc(routes =>
             {

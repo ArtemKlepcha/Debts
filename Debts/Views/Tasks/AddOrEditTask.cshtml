@@ -11,7 +11,7 @@
     @Html.ValidationMessageFor(m => m.Name)
 
     @Html.LabelFor(m => m.Sum, new { @class = "" })
-    @Html.TextBoxFor(m => m.Sum, new { onchange="changeSum()"})
+    @Html.TextBoxFor(m => m.Sum, new { onkeyup="changeSum()"})
     @Html.ValidationMessageFor(m => m.Sum)
 
 
@@ -45,11 +45,13 @@
         var newTimeSlot = $(template.html().replace(new RegExp('@int.MaxValue', 'g'), timeSlotIndex));
         $('#divMembers').append(newTimeSlot);
         slotsCount++;
+        changeSum();
     }
 
     function removeMember(btn) {
         console.log("remove");
         $(btn).closest('[data-member-row]').remove();
+        changeSum();
     }
 
     function changeSum() {
