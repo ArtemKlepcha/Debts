@@ -12,7 +12,7 @@ namespace Debts.Models.Repositories.Concrete
     public class TaskRepo: ITaskRepo
     {
         private readonly ApplicationDbContext ctx;
-        private IEnumerable<Task> Tasks => ctx.Tasks.Include(m => m.Members).ToList();
+        private IEnumerable<Task> Tasks => ctx.Tasks.Include(m => m.Members).Include(d => d.Debts).ToList();
 
         public TaskRepo(ApplicationDbContext applicationDbContext)
         {
