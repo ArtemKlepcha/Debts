@@ -1,21 +1,21 @@
 ﻿@using Debts.ViewModels
 @model TaskViewModel
 
-@using (Html.BeginForm("AddOrEditTask", "Tasks", FormMethod.Post, new { @class = "form", role = "form" }))
+@using (Html.BeginForm("AddOrEditTask", "Tasks", FormMethod.Post, new { @class = "form", role = "form", id = "fromAddOrEditTask", onsubmit = "return false" }))
 {
-<h4>
-    @if (string.IsNullOrEmpty(Model.Name))
-    {
-        @:Add task
-    }
-    else
-    {
-        @:Edit @Model.Name
-    }
-</h4>
+    <h4>
+        @if (string.IsNullOrEmpty(Model.Name))
+        {
+            @:Add task
+        }
+        else
+        {
+            @:Edit @Model.Name
+        }
+    </h4>
     <div class="form-inline">
-            @Html.HiddenFor(m => m.TaskId)
-            @Html.HiddenFor(m => m.UserId)
+        @Html.HiddenFor(m => m.TaskId)
+        @Html.HiddenFor(m => m.UserId)
         <div class="form-inline m-2">
             @Html.LabelFor(m => m.Name, new { @class = "" })
             @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
@@ -28,27 +28,27 @@
         </div>
     </div>
 
-        <div id="divMembers">
-            <h4>Members</h4>
-            @foreach (var key in Model.Members.Keys)
-            {
-                @Html.Partial("AddMember", new EditTaskMemberViewModel(Model.Members, key))
-            }
-        </div>
-
-        <button type="button" onclick="AddMemberButton()" class="btn btn-primary">Add Member</button>
-
-
-
-        <input type="submit" class="btn btn-success" value="Save" />
-
+    <div id="divMembers">
+        <h4>Members</h4>
+        @foreach (var key in Model.Members.Keys)
+        {
+            @Html.Partial("AddMember", new EditTaskMemberViewModel(Model.Members, key))
         }
+    </div>
 
-        <div id="divNewMemberTemplate" class="hide" hidden="hidden">
-            @Html.Partial("AddMember", new EditTaskMemberViewModel(null, int.MaxValue.ToString()))
-        </div>
+    <button type="button" onclick="AddMemberButton()" class="btn btn-primary">Add Member</button>
 
-        <script type="text/javascript">
+
+
+    <input type="submit" class="btn btn-success" onclick="saveDebts()" value="Save" />
+
+}
+
+<div id="divNewMemberTemplate" class="hide" hidden="hidden">
+    @Html.Partial("AddMember", new EditTaskMemberViewModel(null, int.MaxValue.ToString()))
+</div>
+
+<script type="text/javascript">
 
     var slotsCount = @(Model.Members.Count);
 
@@ -85,9 +85,8 @@
         if (debtsEditInputs.length != 0) {
             var debtsEditSum = 0;
             //caclulate sum without this fields
-            for (var i = 0; i < debtsEditInputs.length; i++) {
-                debtsEditSum += parseFloat(debtsEditInputs[i].value);
-            }
+            debtsEditSum = CalculateSum(debtsEditInputs, debtsEditInputs.length);
+
             sumInput -= debtsEditSum;
             if (sumInput < 0) {
                 sumInputElem.style.color = "red";
@@ -147,24 +146,50 @@
         //}
     }
 
+
     function changeDeposit() {
         var sumInput = document.getElementById("Sum");
-        console.log(sumInput.value);
-        var depositInputs = document.getElementsByClassName("deposit");
-        var depositsLength = depositInputs.length - 1;
 
-        var sumDeposits = 0;
-        for (var iterator = 0; iterator < depositsLength; iterator++) {
-            sumDeposits += parseFloat(depositInputs[iterator].value);
-        }
-        console.log(sumDeposits);
+        var depositInputs = document.getElementsByClassName("deposit");
+
+        var sumDeposits = CalculateSum(depositInputs, depositInputs.length - 1);
 
         if (sumDeposits < sumInput.value) {
             sumInput.style.color = "red";
         } else {
             sumInput.style.color = "black";
         }
-
     }
 
-        </script>
+    function saveDebts() {
+
+        var sumInput = document.getElementById("Sum");
+        var depositInputs = document.getElementsByClassName("deposit");
+
+        var depositsSum = CalculateSum(depositInputs, depositInputs.length - 1);
+        if (sumInput.value != depositsSum) {
+            alert('Sum of deposits not equal Task sum');
+            return;
+        }
+
+        $.ajax({
+            url: '@Url.Action("AddOrEditTask","Tasks")',
+            data: $('#fromAddOrEditTask').serialize(),
+            type: 'POST',
+            async: false,
+            success: function (response) {
+                window.location = response;
+            }
+        });
+    }
+
+    //replace all sum calc
+    function CalculateSum(inputs, length) {
+        var sum = 0;
+        for (var iterator = 0; iterator < length; iterator++) {
+            sum += parseFloat(inputs[iterator].value);
+        }
+        return sum;
+    }
+
+</script>
