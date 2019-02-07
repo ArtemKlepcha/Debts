@@ -24,6 +24,8 @@ namespace Debts.ViewModels
         public double Sum { get; set; }
 
         public Dictionary<string, MemberViewModel> Members { get; set; } = new Dictionary<string, MemberViewModel>();
+
+        public List<DebtElementViewModel> Debts { get; set; } = new List<DebtElementViewModel>();
     }
 
     public class EditTaskMemberViewModel

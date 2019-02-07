@@ -1,5 +1,6 @@
 ﻿using Debts.Data;
 using Debts.Models.Repositories.Abstract;
+using Debts.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

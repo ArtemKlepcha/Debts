@@ -33,14 +33,21 @@ namespace Debts.Models.Repositories.Concrete
                 Name = taskViewModel.Name,
                 Sum = taskViewModel.Sum,
                 UserId = taskViewModel.UserId,
-                Members = taskViewModel.Members.Values.Select(e=>e.Map()).ToList()
+                Members = taskViewModel.Members.Values.Select(e=>e.Map()).ToList(),
+                Debts = taskViewModel.Debts.Select(e=>e.Map()).ToList()      
             };
 
             var listMembersIdForDel = ctx.Members.Where(t => t.TaskId == task.Id).Except(taskViewModel.Members.Values.Select(e => e.Map())).ToList();
+            var listDebtsIdForDel = ctx.Debts.Where(t => t.TaskId == task.Id).Except(taskViewModel.Debts.Select(d => d.Map()));
 
             foreach (var item in listMembersIdForDel)
             {
                 ctx.Members.Remove(item);
+            }
+
+            foreach(var item in listDebtsIdForDel)
+            {
+                ctx.Debts.Remove(item);
             }
 
 
