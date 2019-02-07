@@ -60,9 +60,6 @@ body {
 .text-black {
     color: #000;
 }
-.form-group {
-    width: 500px;
-}
 
 .form-inline > label {
     margin-right: 5px;
