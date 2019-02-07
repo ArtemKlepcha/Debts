@@ -64,3 +64,13 @@ body {
 .form-inline > label {
     margin-right: 5px;
 }
+
+.removetask {
+    width: 1px;
+    padding: 0 !important;
+}
+
+.removetask > button {
+    width: 47px;
+    height: 47px;
+}
