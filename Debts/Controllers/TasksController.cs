@@ -61,7 +61,8 @@ namespace Debts.Controllers
             CalculateDebts(ref taskViewModel);
             _taskRepo.Save(taskViewModel);
 
-            return RedirectToAction("Index");
+            return Json(Url.Action("Index", "Tasks"));
+            //return RedirectToAction("Index");
         }
 
         [HttpGet]
