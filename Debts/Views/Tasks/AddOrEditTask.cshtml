@@ -164,11 +164,18 @@
     function saveDebts() {
 
         var sumInput = document.getElementById("Sum");
-        var depositInputs = document.getElementsByClassName("deposit");
+        var depositInputs = document.getElementsByClassName("deposit")
+        var debtInputs = document.getElementsByClassName("saveDebt");
 
         var depositsSum = CalculateSum(depositInputs, depositInputs.length - 1);
+        var debtsSum = CalculateSum(debtInputs, debtInputs.length - 1);
+
         if (sumInput.value != depositsSum) {
             alert('Sum of deposits not equal Task sum');
+            return;
+        }
+        if (sumInput.value != debtsSum) {
+            alert('Sum of debts not equal Task sum');
             return;
         }
 
