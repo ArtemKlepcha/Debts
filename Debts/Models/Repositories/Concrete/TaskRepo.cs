@@ -25,6 +25,12 @@ namespace Debts.Models.Repositories.Concrete
             return new TaskListViewModel { Tasks = Tasks.Where(s => s.UserId == userId).ToList() };
         }
 
+        public void DeleteTask(Task task)
+        {
+            ctx.Tasks.Remove(task);
+            ctx.SaveChanges();
+        }
+
         public void Save(TaskViewModel taskViewModel)
         {
             Task task = new Task

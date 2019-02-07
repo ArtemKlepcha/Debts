@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Debts.Models;
+using Task = Debts.Models.Task;
 
 namespace Debts.Controllers
 {
@@ -27,7 +28,7 @@ namespace Debts.Controllers
 
             return View(taskList);
         }
-        
+
         [HttpGet]
         public IActionResult AddOrEditTask(int? id)
         {
@@ -39,7 +40,7 @@ namespace Debts.Controllers
 
             if (id != null)
             {
-              taskViewModel =  _taskRepo.GetValue(id - 1, UserId);
+                taskViewModel = _taskRepo.GetValue(id - 1, UserId);
             }
 
             return View(taskViewModel);
@@ -97,8 +98,8 @@ namespace Debts.Controllers
             List<DebtElementViewModel> debtsTable = new List<DebtElementViewModel>();
 
             var credCount = creditors.Count;
-            
-            for(int credIter = 0;credIter< credCount; credIter++)
+
+            for (int credIter = 0; credIter < credCount; credIter++)
             {
                 double debt;
                 var creditor = creditors.ElementAt(credIter);
@@ -111,7 +112,7 @@ namespace Debts.Controllers
                     debtors[debtor.Key] -= debt;
                     creditors[creditor.Key] += debt;
 
-                     debtsTable.Add(new DebtElementViewModel
+                    debtsTable.Add(new DebtElementViewModel
                     {
                         Member1 = creditor.Key,
                         Member2 = debtor.Key,
@@ -132,9 +133,9 @@ namespace Debts.Controllers
             taskViewModel.Debts = debtsTable;
         }
 
-        private void  DeleteDebtors(ref Dictionary<string, double> debtors)
+        private void DeleteDebtors(ref Dictionary<string, double> debtors)
         {
-            for(int debtIter = 0; debtIter < debtors.Count; debtIter++)
+            for (int debtIter = 0; debtIter < debtors.Count; debtIter++)
             {
                 var debtor = debtors.ElementAt(debtIter);
                 if (debtor.Value == 0)
@@ -142,6 +143,16 @@ namespace Debts.Controllers
                 debtIter--;
             }
         }
+        
+        [HttpPost, HttpGet]
+        public void DeleteTask(Guid id)
+        {
+            TaskListViewModel taskList = _taskRepo.GetAll(UserId);
+            Task task = taskList.Tasks.Where(t => t.Id.Equals(id)).First();
+            _taskRepo.DeleteTask(_taskRepo.GetAll(UserId).Tasks.Where(t => t.Id.Equals(id)).First());
 
+            ViewBag.task = task;
+            //return id.ToString();
+        }
     }
 }

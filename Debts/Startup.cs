@@ -65,7 +65,6 @@ namespace Debts
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
 
