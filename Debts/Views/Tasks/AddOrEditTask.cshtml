@@ -151,12 +151,10 @@
 
     function changeDeposit() {
         var sumInput = document.getElementById("Sum");
-
         var depositInputs = document.getElementsByClassName("deposit");
 
         var sumDeposits = CalculateSum(depositInputs, depositInputs.length - 1);
-
-        if (sumDeposits < sumInput.value) {
+        if (sumDeposits != sumInput.value) {
             sumInput.style.color = "red";
         } else {
             sumInput.style.color = "black";
