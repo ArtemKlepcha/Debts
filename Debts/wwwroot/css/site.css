@@ -60,10 +60,17 @@ body {
 .text-black {
     color: #000;
 }
-.form-group {
-    width: 500px;
-}
 
 .form-inline > label {
     margin-right: 5px;
+}
+
+.removetask {
+    width: 1px;
+    padding: 0 !important;
+}
+
+.removetask > button {
+    width: 47px;
+    height: 47px;
 }

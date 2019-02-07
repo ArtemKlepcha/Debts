@@ -10,7 +10,7 @@
                 Имя
             </th>
             <th>
-                Долг
+                Сумма
             </th>
         </tr>
     </thead>
@@ -21,25 +21,20 @@
                     @if (Model.Name.Equals(item.Member1))
                     {
                     <td>
-                        @Html.DisplayFor(modelItem => item.Member2)
+                        <label asp-for="@item.Member2">@item.Member2</label>
                     </td>
-
                     <td>
-                        
-                        +@Html.DisplayFor(modelItem => item.Money)
-                        
+                        <label asp-for="@item.Money">@item.Money</label>
                     </td>
                     }
                     else
                     {
-                        <td>
-                        @Html.DisplayFor(modelItem => item.Member1)
+                    <td>
+                        <label asp-for="@item.Member1">@item.Member1</label>
                     </td>
 
                     <td>
-
-                        -@Html.DisplayFor(modelItem => item.Money)
-                        
+                        <label asp-for="@item.Money">@item.Money</label>
                     </td>
                     }
                 </tr>
