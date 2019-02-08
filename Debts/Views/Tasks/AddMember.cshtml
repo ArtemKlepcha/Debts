@@ -3,9 +3,8 @@
 @model EditTaskMemberViewModel
 
 <div id="AddMemberModal" role="dialog" data-member-row>
-    @if (Model.Members != null && Model.Key == int.MaxValue.ToString())
-    {
-        
+    @if (Model.Key == int.MaxValue.ToString())
+    { 
         <input asp-for="Members[@Model.Key].MemberId" value="@Guid.Empty" class="form-control" type="hidden" />
     }
     else
@@ -15,18 +14,15 @@
     <div class="form-inline">
         <div class="form-inline m-2">
             <label asp-for="Members[Model.Key].Name"></label>
-            <input asp-for="Members[Model.Key].Name" class="form-control membername" />
-            <span asp-validation-for="Members[Model.Key].Name"></span>
+            <input asp-for="Members[Model.Key].Name" class="form-control nameInput" />
         </div>
         <div class="form-inline m-2">
             <label asp-for="Members[Model.Key].Deposit"></label>
             <input asp-for="Members[Model.Key].Deposit" onchange="changeDeposit()" class="form-control deposit" />
-            <span asp-validation-for="Members[Model.Key].Deposit"></span>
         </div>
         <div class="form-inline m-2">
             <label asp-for="Members[Model.Key].Debt"></label>
             <input asp-for="Members[Model.Key].Debt" onchange="changeDebt(this)" class="saveDebt form-control debt" />
-            <span asp-validation-for="Members[Model.Key].Debt"></span>
         </div>
         <button class="btn btn-danger" role="button" type="button" onclick="removeMember(this)">×</button>
     </div>

@@ -17,13 +17,11 @@
         <input asp-for="UserId" type="hidden"/>
         <div class="form-inline m-2">
             <label asp-for="Name"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name"></span>
+            <input asp-for="Name" class="form-control nameInput" />
         </div>
         <div class="form-inline m-2">
             <label asp-for="Sum"></label>
             <input asp-for="Sum" class="form-control" onkeyup="changeSum()"/>
-            <span asp-validation-for="Sum"></span>
         </div>
     </div>
 
@@ -57,7 +55,6 @@
         $('#divMembers').append(newTimeSlot);
         slotsCount++;
         changeSum();
-
     }
 
     function removeMember(btn) {
@@ -94,7 +91,6 @@
             }
         }
         
-
         //get all inputs with "debts"
         var debtsInputs = document.getElementsByClassName("debt");
         var debtsLength = debtsInputs.length - 1;
@@ -139,9 +135,6 @@
 
     function changeDebt(editedInput) {
         editedInput.className += "editing";
-        //var debtsInputs = document.getElementsByClassName("debt");
-        //for (var iterator = 0; iterator < debtsInputs.length-1; iterator++) {
-        //}
     }
 
 
@@ -161,10 +154,14 @@
         var sumInput = document.getElementById("Sum");
         var depositInputs = document.getElementsByClassName("deposit")
         var debtInputs = document.getElementsByClassName("saveDebt");
-        var nameInputs = document.getElementsByClassName("membername");
-        CheckNames(nameInputs);
+        var nameInputs = document.getElementsByClassName("nameInput");
+
         var depositsSum = CalculateSum(depositInputs, depositInputs.length - 1);
         var debtsSum = CalculateSum(debtInputs, debtInputs.length - 1);
+
+        if (!CheckNames(nameInputs)){
+            return;
+        }
 
         if (sumInput.value != depositsSum) {
             swal({
@@ -208,13 +205,13 @@
             if (array[i].value === '') {
                 swal({ 
                     icon: "error",
-                    text: "Name",
+                    text: "Field \"Name\" can't be empty",
                     dangerMode: true,
                 });
-                return;
-                
+                return false;
             };
         }; 
+        return true;
     }
 
 </script>

@@ -17,10 +17,10 @@ namespace Debts.ViewModels
         public Guid TaskId { get; set; }
         public string UserId { get; set; }
 
-        [Required(ErrorMessage = "Field \"Name\" can't be empty")]
+        //[Required(ErrorMessage = "Field \"Name\" can't be empty")]
         public string Name { get; set; }
 
-        [Range(0, maxValue, ErrorMessage = "Min value is 0.")]
+        //[Range(0, maxValue, ErrorMessage = "Min value is 0.")]
         public double Sum { get; set; }
 
         public Dictionary<string, MemberViewModel> Members { get; set; } = new Dictionary<string, MemberViewModel>();
@@ -35,7 +35,17 @@ namespace Debts.ViewModels
 
         public EditTaskMemberViewModel(Dictionary<string, MemberViewModel> members, string index)
         {
-            Members = members;
+            
+            if (members == null)
+            {
+                Members = new Dictionary<string, MemberViewModel>(){
+                    { index , new MemberViewModel() }
+                };
+            }
+            else
+            {
+                Members = members;
+            }
             Key = index;
         }
     }
