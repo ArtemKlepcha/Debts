@@ -13,13 +13,13 @@ namespace Debts.ViewModels
 
         public Guid MemberId { get; set; }
 
-        //[Required(ErrorMessage = "Field \"Name\" can't be empty")]
+        [Required(ErrorMessage = "Field \"Name\" can't be empty")]
         public string Name { get; set; }
 
-        //[Range(0, maxValue, ErrorMessage = "Min value is 0.")]
+        [Range(0, maxValue, ErrorMessage = "Min value is 0.")]
         public double Deposit { get; set; }
 
-        //[Range(0, maxValue, ErrorMessage = "Min value is 0.")]
+        [Range(0, maxValue, ErrorMessage = "Min value is 0.")]
         public double Debt { get; set; }
 
         public Guid TaskId { get; set; }

@@ -49,16 +49,19 @@ namespace Debts.Controllers
         [HttpPost]
         public IActionResult AddOrEditTask(TaskViewModel taskViewModel)
         {
-            CalculateDebts(ref taskViewModel);
-            _taskRepo.Save(taskViewModel);
-
-            return Json(Url.Action("Index", "Tasks"));
+            if (ModelState.IsValid)
+            {
+                CalculateDebts(ref taskViewModel);
+                _taskRepo.Save(taskViewModel);
+                return RedirectToAction("Index");
+            }
+            return View(taskViewModel);
         }
 
         [HttpGet]
-        public JsonResult CheckValue(double value)
+        public JsonResult CheckName(int name)
         {
-            var result = !(value > 0);
+            var result = !(name > 0);
             return Json(result);
         }
 
@@ -109,7 +112,6 @@ namespace Debts.Controllers
                     if (creditors[creditor.Key] == 0)
                     {
                         DeleteDebtors(ref debtors);
-                        debtorIter = 0;
                         break;
                     }
                     debtorIter++;
@@ -130,12 +132,10 @@ namespace Debts.Controllers
             }
         }
         
-        [HttpPost, HttpGet]
+        [HttpPost]
         public void DeleteTask(Guid id)
         {
             _taskRepo.DeleteTask(id);
-            //ViewBag.task = task;
-            //return id.ToString();
         }
     }
 }

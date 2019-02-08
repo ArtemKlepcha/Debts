@@ -1,9 +1,9 @@
 ﻿@using Debts.ViewModels
 @model TaskViewModel
 
-<form name="AddOrEditTask", asp-controller="Tasks" method="post" role="form" id="fromAddOrEditTask" onsubmit="saveDebts(); return false;">
+<form asp-action="AddOrEditTask" asp-controller="Tasks" method="post" role="form" id="fromAddOrEditTask" onsubmit="">
     <h4>
-        @if(string.IsNullOrEmpty(Model.Name))
+        @if (string.IsNullOrEmpty(Model.Name))
         {
             @:Add task
         }
@@ -13,23 +13,32 @@
         }
     </h4>
     <div class="form-inline">
-        <input asp-for="TaskId" type="hidden"/>
-        <input asp-for="UserId" type="hidden"/>
-        <div class="form-inline m-2">
-            <label asp-for="Name"></label>
+        <input asp-for="TaskId" type="hidden" />
+        <input asp-for="UserId" type="hidden" />
+        <label asp-for="Name"></label>
+        <div class="form-inline m-2 d-flex flex-column">
             <input asp-for="Name" class="form-control nameInput" />
+            <span asp-validation-for="Name"></span>
         </div>
-        <div class="form-inline m-2">
-            <label asp-for="Sum"></label>
-            <input asp-for="Sum" class="form-control" onkeyup="changeSum()"/>
+        <label asp-for="Sum"></label>
+        <div class="form-inline m-2 d-flex flex-column">
+            <input asp-for="Sum" class="form-control" onkeyup="changeSum()" />
+            <span asp-validation-for="Sum"></span>
         </div>
     </div>
 
     <div id="divMembers">
         <h4>Members</h4>
+        <table class="memberstable">
+            <tr>
+                <th>Name</th>
+                <th>Deposit</th>
+                <th>Debt</th>
+            </tr>
+        </table>
         @foreach (var key in Model.Members.Keys)
         {
-            <partial name="AddMember" model="@new EditTaskMemberViewModel(Model.Members, key)"/>
+            <partial name="AddMember" model="@new EditTaskMemberViewModel(Model.Members, key)" />
         }
     </div>
 
@@ -39,12 +48,14 @@
 </form>
 
 <div id="divNewMemberTemplate" class="hide" hidden="hidden">
-    <partial name="AddMember" model="@new EditTaskMemberViewModel(null, int.MaxValue.ToString())"/>
+    <partial name="AddMember" model="@new EditTaskMemberViewModel(null, int.MaxValue.ToString())" />
 </div>
 
-
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script type="text/javascript">
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
 
     var slotsCount = @(Model.Members.Count);
 
@@ -90,7 +101,7 @@
                 sumInputElem.style.color = "black";
             }
         }
-        
+
         //get all inputs with "debts"
         var debtsInputs = document.getElementsByClassName("debt");
         var debtsLength = debtsInputs.length - 1;
@@ -137,18 +148,42 @@
         editedInput.className += "editing";
     }
 
-
+    
     function changeDeposit() {
         var sumInput = document.getElementById("Sum");
         var depositInputs = document.getElementsByClassName("deposit");
 
         var sumDeposits = CalculateSum(depositInputs, depositInputs.length - 1);
-        if (sumDeposits != sumInput.value) {
+        if (sumDeposits !== sumInput.value) {
             sumInput.style.color = "red";
         } else {
             sumInput.style.color = "black";
         }
     }
+    
+    //replace all sum calc
+    function CalculateSum(inputs, length) {
+        var sum = 0;
+        for (var iterator = 0; iterator < length; iterator++) {
+            sum += parseFloat(inputs[iterator].value);
+        }
+        return sum;
+    }
+    @*
+    function CheckNames(array) {
+        for (var i = 0; i < array.length-1; i++) {
+            if (array[i].value === '') {
+                swal({
+                    icon: "error",
+                    text: "Field \"Name\" can't be empty",
+                    dangerMode: true,
+                });
+                return false;
+            };
+        };
+        return true;
+    }
+
 
     function saveDebts() {
         var sumInput = document.getElementById("Sum");
@@ -189,29 +224,7 @@
                 window.location = response;
             }
         });
-    }
+    }*@
 
-    //replace all sum calc
-    function CalculateSum(inputs, length) {
-        var sum = 0;
-        for (var iterator = 0; iterator < length; iterator++) {
-            sum += parseFloat(inputs[iterator].value);
-        }
-        return sum;
-    }
-
-    function CheckNames(array) {
-        for (var i = 0; i < array.length-1; i++) {
-            if (array[i].value === '') {
-                swal({ 
-                    icon: "error",
-                    text: "Field \"Name\" can't be empty",
-                    dangerMode: true,
-                });
-                return false;
-            };
-        }; 
-        return true;
-    }
-
-</script>
+    
+    </script>

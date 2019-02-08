@@ -17,13 +17,42 @@ namespace Debts.ViewModels
         public Guid TaskId { get; set; }
         public string UserId { get; set; }
 
-        //[Required(ErrorMessage = "Field \"Name\" can't be empty")]
+        [Required(ErrorMessage = "Field \"Name\" can't be empty")]
         public string Name { get; set; }
 
-        //[Range(0, maxValue, ErrorMessage = "Min value is 0.")]
+        [Range(0, maxValue, ErrorMessage = "Min value is 0.")]
+        [Deposit]
+        [Debt]
         public double Sum { get; set; }
 
         public Dictionary<string, MemberViewModel> Members { get; set; } = new Dictionary<string, MemberViewModel>();
+
+        public double DepositsMember
+        {
+            get
+            {
+                double sum = 0;
+                foreach (var item in Members)
+                {
+                    sum += item.Value.Deposit;
+                }
+                return sum;
+            }
+
+        }
+        public double DebtsMember
+        {
+            get
+            {
+                double sum = 0;
+                foreach (var item in Members)
+                {
+                    sum += item.Value.Debt;
+                }
+                return sum;
+            }
+
+        }
 
         public List<DebtElementViewModel> Debts { get; set; } = new List<DebtElementViewModel>();
     }

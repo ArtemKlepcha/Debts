@@ -79,3 +79,36 @@ body {
 .swal-modal {
     margin-bottom: 15% !important;
 }
+
+.btn-validation, label[for=Name], label[for=Sum] {
+    margin-bottom: 24px;
+}
+
+.field-validation-valid {
+    height: 24px;
+}
+.field-validation-error {
+    color: #f00;
+}
+.validation-summary-errors {
+    color: #f00;
+    font-weight: bold;
+}
+.input-validation-error {
+    border: 1px solid #f00;
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+}
+.input-validation-error:focus {
+    border: 1px solid #f00;
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25)!important;
+}
+input[type="checkbox"].input-validation-error {
+    outline: 1px solid #f00;
+}
+
+.memberstable th {
+    padding: 0 24px;
+    font-size: 20px;
+    text-align: center;
+    width: 242px;
+}
