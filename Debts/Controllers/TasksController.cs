@@ -49,21 +49,10 @@ namespace Debts.Controllers
         [HttpPost]
         public IActionResult AddOrEditTask(TaskViewModel taskViewModel)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    _taskRepo.Save(taskViewModel);
-            //    return RedirectToAction("Index");
-            //}
-            //else
-            //{
-            //    return View(taskViewModel);
-            //}
-
             CalculateDebts(ref taskViewModel);
             _taskRepo.Save(taskViewModel);
 
             return Json(Url.Action("Index", "Tasks"));
-            //return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -76,9 +65,6 @@ namespace Debts.Controllers
         public void CalculateDebts(ref TaskViewModel taskViewModel)
         {
             List<MemberViewModel> memberList = taskViewModel.Members.Values.ToList();
-
-            //calculate balance for each
-            //Dictionary<string, double> balance = new Dictionary<string, double>();
 
             Dictionary<string, double> creditors = new Dictionary<string, double>();
             Dictionary<string, double> debtors = new Dictionary<string, double>();
@@ -147,11 +133,8 @@ namespace Debts.Controllers
         [HttpPost, HttpGet]
         public void DeleteTask(Guid id)
         {
-            TaskListViewModel taskList = _taskRepo.GetAll(UserId);
-            Task task = taskList.Tasks.Where(t => t.Id.Equals(id)).First();
-            _taskRepo.DeleteTask(_taskRepo.GetAll(UserId).Tasks.Where(t => t.Id.Equals(id)).First());
-
-            ViewBag.task = task;
+            _taskRepo.DeleteTask(id);
+            //ViewBag.task = task;
             //return id.ToString();
         }
     }

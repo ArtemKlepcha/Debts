@@ -25,10 +25,14 @@ namespace Debts.Models.Repositories.Concrete
             return new TaskListViewModel { Tasks = Tasks.Where(s => s.UserId == userId).ToList() };
         }
 
-        public void DeleteTask(Task task)
+        public void DeleteTask(Guid taskId)
         {
-            ctx.Tasks.Remove(task);
-            ctx.SaveChanges();
+            var task = ctx.Tasks.Where(t => t.Id == taskId).FirstOrDefault();
+            if (task != null)
+            {
+                ctx.Tasks.Remove(task);
+                ctx.SaveChanges();
+            }
         }
 
         public void Save(TaskViewModel taskViewModel)
@@ -77,15 +81,6 @@ namespace Debts.Models.Repositories.Concrete
                 Name = task.Name,
                 Sum = task.Sum,
                 TaskId = task.Id,
-                //task.Members.Select(memb => new MemberViewModel
-                //{
-                //    MemberId = memb.Id,
-                //    TaskId = memb.TaskId,
-                //    Name = memb.Name,
-                //    Deposit = memb.Deposit,
-                //    Debt = memb.Debt
-
-                //}).ToList(),
                 UserId = task.UserId
             };
             taskViewModel.Members = task.Members.ToDictionary(n => n.Id.ToString(), n => n.Map());

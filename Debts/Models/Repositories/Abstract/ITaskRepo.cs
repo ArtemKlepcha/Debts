@@ -13,6 +13,6 @@ namespace Debts.Models.Repositories.Abstract
         TaskListViewModel GetAll(string userId);
         TaskViewModel GetValue(int? taskId, string UserId);
         void Save(TaskViewModel taskViewModel);
-        void DeleteTask(Task task);
+        void DeleteTask(Guid taskId);
     }
 }
