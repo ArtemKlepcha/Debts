@@ -1,18 +1,19 @@
-﻿using System;
+﻿using Debts.ViewModels;
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Debts.Models
+namespace Debts.ViewModels.ValidationAttribute
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class DebtAttribute : CompareAttribute
+    public class DebtSumCheckAttribute : CompareAttribute
     {
         private static readonly string property = "DebtsMember";
-        public DebtAttribute() : base(property) { }
+        public DebtSumCheckAttribute() : base(property) { }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
 
-            var otherValue = validationContext.ObjectType.GetProperty(property).GetValue(validationContext.ObjectInstance, null);
+            var otherValue = ((TaskViewModel)validationContext.ObjectInstance).DebtsMember;
             return (double)value != (double)otherValue ? new ValidationResult("Sum of debts not equal Sum") : null;
 
         }

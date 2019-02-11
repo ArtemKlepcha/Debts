@@ -1,4 +1,5 @@
 ﻿using Debts.Models;
+using Debts.ViewModels.ValidationAttribute;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,8 +22,8 @@ namespace Debts.ViewModels
         public string Name { get; set; }
 
         [Range(0, maxValue, ErrorMessage = "Min value is 0.")]
-        [Deposit]
-        [Debt]
+        [DepositSumCheck]
+        [DebtSumCheck]
         public double Sum { get; set; }
 
         public Dictionary<string, MemberViewModel> Members { get; set; } = new Dictionary<string, MemberViewModel>();
